@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:stretchColumns="1"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="50dp">
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/college_name"
+            android:textSize="20sp" />
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/college_address"
+            android:textSize="20sp" />
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblUsername"
+        android:text="@string/username"
+        android:textSize="20sp" />
+        <EditText
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtUsername"
+            android:hint="@string/username_hint"
+            android:inputType="text"
+            android:autofillHints="username" />
+    </TableRow>
+
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:id="@+id/lblPassword"
+            android:text="@string/password" />
+        <EditText
+            android:layout_marginLeft="10dp"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPassword"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:autofillHints="password" />
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_button"
+            android:id="@+id/btnLogin"
+            android:layout_gravity="center_horizontal"/>
+    </TableRow>
+</TableLayout>

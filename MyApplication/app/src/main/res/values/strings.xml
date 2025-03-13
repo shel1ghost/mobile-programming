@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="college_name">Pascal National College</string>
+    <string name="college_address">Satdobato, Lalitpur</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="username_hint">Enter Username</string>
+    <string name="password_hint">Enter Password</string>
+    <string-array name="spinner_items">
+        <item>Koshi</item>
+        <item>Madhesh</item>
+        <item>Bagmati</item>
+        <item>Gandaki</item>
+        <item>Lumbini</item>
+        <item>Karnali</item>
+        <item>Sudurpaschim</item>
+    </string-array>
+    <string name="heading">Simple Intrest\nCalculator</string>
+    <string name="principal">Principal:</string>
+    <string name="principal_hint">Enter principal...</string>
+    <string name="time">Time:</string>
+    <string name="time_hint">Enter time...</string>
+    <string name="rate">Rate:</string>
+    <string name="rate_hint">Enter rate...</string>
+    <string name="calculate">Calculate</string>
+    <string name="calculate_next">Calculate and go to next</string>
+    <string name="intrest">Your intrest is: </string>
+    <string name="result">Result</string>
+</resources>
