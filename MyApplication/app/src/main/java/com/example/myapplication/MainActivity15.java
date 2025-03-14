@@ -4,21 +4,15 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.TextView;
-import android.content.Intent;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity4 extends AppCompatActivity {
+public class MainActivity15 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
-        Intent i = getIntent();
-        String name = i.getStringExtra("data");
-        TextView txtbox = findViewById(R.id.textbox);
-        txtbox.setText("Welcome "+name);
+        setContentView(R.layout.activity_main15);
     }
 }

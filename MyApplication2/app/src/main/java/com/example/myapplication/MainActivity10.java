@@ -1,7 +1,8 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-
+import android.content.Intent;
+import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -13,12 +14,19 @@ public class MainActivity10 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main10);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        Intent i = getIntent();
+        String name = i.getStringExtra("name");
+        String email = i.getStringExtra("email");
+        String phone = i.getStringExtra("phone");
+        String address = i.getStringExtra("address");
+        TextView txt_name = findViewById(R.id.resultName);
+        TextView txt_email = findViewById(R.id.resultEmail);
+        TextView txt_phone = findViewById(R.id.resultPhone);
+        TextView txt_address = findViewById(R.id.resultAddress);
+        txt_name.setText("Name: "+name);
+        txt_email.setText("Email: "+email);
+        txt_phone.setText("Phone: "+phone);
+        txt_address.setText("Address: "+address);
     }
 }

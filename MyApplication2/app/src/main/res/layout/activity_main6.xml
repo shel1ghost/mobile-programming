@@ -1,10 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    tools:context=".MainActivity6">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_black">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ARITHMETIC CALCULATOR"
+        android:textColor="@color/blue"
+        android:background="@drawable/textview_border"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:fontFamily="serif"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First number: "
+            android:textSize="20sp"
+            android:fontFamily="serif"
+            android:textColor="@color/white"
+            android:width="160dp"
+            />
+        <EditText
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:id="@+id/num1"
+            android:hint="Enter a number..."
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Second number: "
+            android:textSize="20sp"
+            android:fontFamily="serif"
+            android:textColor="@color/white"
+            android:width="160dp"
+            />
+        <EditText
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:id="@+id/num2"
+            android:hint="Enter a number..."
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="Send"
+        android:id="@+id/btnSend"
+        android:layout_gravity="center_horizontal"
+        android:padding="14dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="serif"
+        android:textColor="@color/green"
+        android:id="@+id/result"
+        android:text=""
+        android:layout_gravity="center_horizontal"
+        />
+</LinearLayout>
