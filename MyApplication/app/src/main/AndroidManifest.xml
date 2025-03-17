@@ -22,7 +22,7 @@
             android:name=".MainActivity14"
             android:exported="false" />
         <activity
-            android:name=".MainActivity9"
+            android:name=".MainActivity2"
             android:exported="false" />
         <activity
             android:name=".MainActivity12"
@@ -40,7 +40,7 @@
             android:name=".MainActivity16"
             android:exported="false" />
         <activity
-            android:name=".MainActivity6"
+            android:name=".MainActivity9"
             android:exported="false" />
         <activity
             android:name=".MainActivity8"
@@ -58,7 +58,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".MainActivity6"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

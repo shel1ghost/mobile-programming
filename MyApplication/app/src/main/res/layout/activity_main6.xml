@@ -4,73 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
+    android:layout_margin="14dp"
     android:layout_gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/college_name"
-        android:id="@+id/college_name"
-        android:textSize="20sp"
+        android:text="Registration Form"
+        android:id="@+id/lblHeading"
+        android:textSize="22sp"
         android:gravity="center"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="@string/college_address"
-        android:id="@+id/college_address"
         android:textSize="20sp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/college_name"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
         android:id="@+id/lblUsername"
-        android:text="@string/username"
-        app:layout_constraintTop_toBottomOf="@+id/college_address"/>
+        android:text="Username: "
+        app:layout_constraintTop_toBottomOf="@+id/lblHeading"/>
 
     <EditText
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:id="@+id/txtUsername"
         android:hint="@string/username_hint"
         android:inputType="text"
         android:autofillHints="username"
-        app:layout_constraintStart_toEndOf="@+id/lblUsername"
         app:layout_constraintLeft_toRightOf="@+id/lblUsername"
-        app:layout_constraintTop_toBottomOf="@+id/college_address"/>
+        app:layout_constraintTop_toBottomOf="@+id/lblHeading"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblUsername"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:id="@+id/lblPassword"
-        android:text="@string/password"
+        android:text="Password:"
         app:layout_constraintTop_toBottomOf="@+id/lblUsername"
         app:layout_constraintRight_toLeftOf="@id/txtPassword"/>
         />
     <EditText
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:id="@+id/txtPassword"
         android:hint="@string/password_hint"
         android:inputType="textPassword"
         android:autofillHints="password"
-        app:layout_constraintStart_toEndOf="@+id/lblPassword"
         app:layout_constraintLeft_toRightOf="@+id/lblPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblPassword"
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblGender"
+        android:text="Gender:"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/lblPassword"
+         />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:textSize="16sp"
+            android:id="@+id/txtMale"
+            app:layout_constraintLeft_toRightOf="@+id/lblGender"
+            app:layout_constraintTop_toBottomOf="@+id/txtPassword"
+            app:layout_constraintBaseline_toBaselineOf="@id/lblGender"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:textSize="16sp"
+            android:id="@+id/txtFemale"
+            app:layout_constraintLeft_toRightOf="@+id/txtMale"
+            app:layout_constraintTop_toBottomOf="@+id/txtPassword"
+            app:layout_constraintBaseline_toBaselineOf="@id/lblGender"
+            />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblStates"
+        android:text="State:"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/lblGender" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/states"
+        android:textSize="16sp"
+        android:entries="@array/spinner_items"
+        app:layout_constraintLeft_toRightOf="@+id/lblStates"
+        app:layout_constraintTop_toBottomOf="@+id/txtMale"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblStates"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblHobbies"
+        android:text="Hobbies:"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/lblStates" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Programming"
+        android:textSize="18sp"
+        android:id="@+id/lblProgramming"
+        app:layout_constraintLeft_toRightOf="@+id/lblHobbies"
+        app:layout_constraintTop_toBottomOf="@+id/txtMale"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblHobbies"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hacking"
+        android:textSize="18sp"
+        android:id="@+id/lblHacking"
+        app:layout_constraintLeft_toRightOf="@+id/lblProgramming"
+        app:layout_constraintTop_toBottomOf="@+id/txtMale"
+        app:layout_constraintBaseline_toBaselineOf="@id/lblProgramming"
         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_button"
+        android:text="Submit"
         android:id="@+id/btnLogin"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword"/>
+        app:layout_constraintTop_toBottomOf="@+id/lblHobbies"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
