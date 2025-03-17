@@ -4,36 +4,27 @@
     android:stretchColumns="1"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:layout_marginTop="50dp">
+    android:layout_margin="14dp">
     <TableRow
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/college_name"
-            android:textSize="20sp" />
+            android:text="Registration Form"
+            android:textSize="22sp" />
     </TableRow>
     <TableRow
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/college_address"
-            android:textSize="20sp" />
-    </TableRow>
-    <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lblUsername"
         android:text="@string/username"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
         <EditText
-            android:layout_width="200sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtUsername"
             android:hint="@string/username_hint"
@@ -43,15 +34,14 @@
 
     <TableRow
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:id="@+id/lblPassword"
             android:text="@string/password" />
         <EditText
-            android:layout_marginLeft="10dp"
             android:layout_width="200sp"
             android:layout_height="wrap_content"
             android:id="@+id/txtPassword"
@@ -59,14 +49,79 @@
             android:inputType="textPassword"
             android:autofillHints="password" />
     </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblGender"
+            android:text="Gender:"
+            android:textSize="16sp"
+            />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtGender">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:textSize="16sp"
+                android:id="@+id/txtMale"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:textSize="16sp"
+                android:id="@+id/txtFemale"
+                />
+        </RadioGroup>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblStates"
+            android:text="State:"
+            android:textSize="16sp"
+            />
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/states"
+            android:textSize="16sp"
+            android:entries="@array/spinner_items"
+            />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblHobbies"
+            android:text="Hobbies:"
+            android:textSize="16sp" />
+    </TableRow>
+    <TableRow>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Programming"
+            android:textSize="16sp" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hacking"
+            android:checked="true"
+            android:textSize="16sp" />
+    </TableRow>
     <TableRow
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="wrap_content">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_button"
-            android:id="@+id/btnLogin"
-            android:layout_gravity="center_horizontal"/>
+            android:id="@+id/btnLogin" />
     </TableRow>
 </TableLayout>

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity15"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity10"
             android:exported="false" />
         <activity
@@ -31,10 +34,10 @@
             android:name=".MainActivity13"
             android:exported="false" />
         <activity
-            android:name=".MainActivity8"
+            android:name=".MainActivity7"
             android:exported="false" />
         <activity
-            android:name=".MainActivity7"
+            android:name=".MainActivity16"
             android:exported="false" />
         <activity
             android:name=".MainActivity6"
@@ -55,7 +58,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity15"
+            android:name=".MainActivity8"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

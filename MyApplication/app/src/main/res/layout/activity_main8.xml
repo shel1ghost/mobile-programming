@@ -6,26 +6,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/college_name"
-        android:id="@+id/college_name"
-        android:textColor="@color/design_default_color_error"
+        android:text="Registration Form"
         android:textSize="25sp"
         android:gravity="center"
         android:layout_marginTop="50dp"
         android:layout_x="2dp"
         android:layout_y="40dp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/college_address"
-        android:id="@+id/college_address"
-        android:textColor="@color/design_default_color_error"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_x="2dp"
-        android:layout_y="80dp"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -34,19 +20,19 @@
         android:id="@+id/lblUsername"
         android:text="@string/username"
         android:layout_x="10dp"
-        android:layout_y="140dp"
+        android:layout_y="100dp"
         />
     <EditText
         android:layout_marginLeft="10dp"
-        android:layout_width="280dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:id="@+id/txtUsername"
         android:hint="@string/username_hint"
         android:inputType="text"
         android:autofillHints="username"
-        android:layout_x="80dp"
-        android:layout_y="140dp"
+        android:layout_x="86dp"
+        android:layout_y="90dp"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -55,26 +41,94 @@
         android:id="@+id/lblPassword"
         android:text="@string/password"
         android:layout_x="10dp"
-        android:layout_y="180dp"
+        android:layout_y="140dp"
         />
     <EditText
         android:layout_marginLeft="10dp"
-        android:layout_width="280dp"
+        android:layout_width="240dp"
         android:textSize="16sp"
         android:layout_height="wrap_content"
         android:id="@+id/txtPassword"
         android:hint="@string/password_hint"
         android:inputType="textPassword"
         android:autofillHints="password"
-        android:layout_x="80dp"
-        android:layout_y="180dp"
+        android:layout_x="86dp"
+        android:layout_y="130dp"
         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblGender"
+        android:text="Gender:"
+        android:layout_x="10dp"
+        android:layout_y="180dp"
+        android:textSize="16sp"
+        />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtGender"
+        android:layout_x="86dp"
+        android:layout_y="170dp">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:id="@+id/txtMale"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:id="@+id/txtFemale"
+            />
+    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblStates"
+        android:text="State:"
+        android:layout_x="10dp"
+        android:layout_y="220dp"
+        android:textSize="16sp"
+        />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/states"
+        android:entries="@array/spinner_items"
+        android:layout_x="86dp"
+        android:layout_y="220dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblHobbies"
+        android:text="Hobbies:"
+        android:textSize="16sp"
+        android:layout_x="10dp"
+        android:layout_y="250dp"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Programming"
+        android:textSize="16sp"
+        android:layout_x="86dp"
+        android:layout_y="238dp"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hacking"
+        android:checked="true"
+        android:textSize="16sp"
+        android:layout_x="220dp"
+        android:layout_y="238dp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_button"
         android:id="@+id/btnLogin"
-        android:layout_gravity="center_horizontal"
-        android:layout_x="140dp"
-        android:layout_y="220dp"/>
+        android:layout_x="130dp"
+        android:layout_y="300dp"/>
 </AbsoluteLayout>
