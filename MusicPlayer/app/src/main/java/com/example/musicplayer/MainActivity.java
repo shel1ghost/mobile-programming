@@ -26,6 +26,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     SeekBar seekBar;
     ListView listView;
     TextView songPlayed, artistPlayed;
+    ArrayList<String> songTitles = new ArrayList<>();
+    ArrayList<String> songPaths = new ArrayList<>();
+    ArrayList<String> songArtists = new ArrayList<>();
     private static final int PERMISSION_REQUEST_CODE = 101; // You can choose any integer value
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +48,6 @@ public class MainActivity extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
 
-        /*mediaPlayer = MediaPlayer.create(this, R.raw.pyaar_aata_hai); // Replace 'sample_audio' with your audio file in 'res/raw'
-
-        playButton.setOnClickListener(v -> mediaPlayer.start());
-        pauseButton.setOnClickListener(v -> mediaPlayer.pause());
-        stopButton.setOnClickListener(v -> {
-            mediaPlayer.stop();
-            mediaPlayer.prepareAsync(); // Re-prepare after stop
-        });*/
     }
 
     @Override
@@ -60,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                ArrayList<String> songTitles = new ArrayList<>();
-                ArrayList<String> songPaths = new ArrayList<>();
-                ArrayList<String> songArtists = new ArrayList<>();
                 listView = findViewById(R.id.songListView);
                 String[] projection = {MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DATA};
                 Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -111,93 +104,111 @@ public class MainActivity extends AppCompatActivity {
                         stopButton = findViewById(R.id.stopButton);
                         songPlayed = findViewById(R.id.song_played);
                         artistPlayed = findViewById(R.id.artist_played);
-
-                        // Stop any currently playing music
-                        if (mediaPlayer != null) {
-                            mediaPlayer.stop();
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
-
-                        // Step 3: Play the selected song
-                        mediaPlayer = new MediaPlayer();
-                        try {
-                            songPlayed.setText(songTitle);
-                            artistPlayed.setText(songArtist);
-                            mediaPlayer.setDataSource(selectedPath); // Set the song's file path
-                            mediaPlayer.prepare();                  // Prepare MediaPlayer for playback
-                            mediaPlayer.start();// Start playback
-
-                            mediaPlayer.setOnPreparedListener(mp -> {
-                                seekBar.setMax(mp.getDuration()); // Set max value based on song duration
-
-                                Handler handler = new Handler();
-                                Runnable updateSeekBar = new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                                            seekBar.setProgress(mediaPlayer.getCurrentPosition()); // Update progress
-                                            handler.postDelayed(this, 1000); // Update every second
-                                        }
-                                    }
-                                };
-                                handler.post(updateSeekBar); // Start the Runnable when MediaPlayer is ready
-                                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                    @Override
-                                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                        if (fromUser && mediaPlayer != null) {
-                                            mediaPlayer.seekTo(progress); // Seek to the desired position
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onStartTrackingTouch(SeekBar seekBar) {
-                                        handler.removeCallbacks(updateSeekBar); // Pause updates while dragging
-                                    }
-
-                                    @Override
-                                    public void onStopTrackingTouch(SeekBar seekBar) {
-                                        handler.post(updateSeekBar); // Resume updates after dragging
-                                    }
-                                });
-                                // Play Button: Resume Playback and Start SeekBar Updates
-                                playButton.setOnClickListener(v -> {
-                                    if (mediaPlayer != null) {
-                                        mediaPlayer.start(); // Start/resume playback
-                                        handler.post(updateSeekBar); // Resume updating the SeekBar
-                                    }
-                                });
-
-                                pauseButton.setOnClickListener(v -> {
-                                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                                        mediaPlayer.pause(); // Pause playback
-                                        handler.removeCallbacks(updateSeekBar); // Stop updating the SeekBar
-                                    }
-                                });
-                                stopButton.setOnClickListener(v -> {
-                                    if (mediaPlayer != null) {
-                                        mediaPlayer.stop();
-                                        mediaPlayer.reset(); // Reset the MediaPlayer
-                                        try {
-                                            mediaPlayer.setDataSource(selectedPath); // Set the song's file path again
-                                            mediaPlayer.prepare(); // Prepare it for playback
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                            });
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Error playing song", Toast.LENGTH_SHORT).show();
-                        }
+                        int currentSongIndex = position;
+                        playSong(currentSongIndex, songTitle, songArtist, selectedPath);
                     }
                 });
             } else {
                 // Permission denied
                 System.out.println("Permission denied. Cannot access storage.");
             }
+        }
+    }
+
+    private void playSong(int songIndex, String songTitle, String songArtist, String selectedPath) {
+        // Stop any currently playing music
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        // Step 3: Play the selected song
+        mediaPlayer = new MediaPlayer();
+        try {
+            songPlayed.setText(songTitle);
+            artistPlayed.setText(songArtist);
+            mediaPlayer.setDataSource(selectedPath); // Set the song's file path
+            mediaPlayer.prepare(); // Prepare MediaPlayer for playback
+            mediaPlayer.start(); // Start playback
+
+            mediaPlayer.setOnPreparedListener(mp -> {
+                seekBar.setMax(mp.getDuration()); // Set max value based on song duration
+
+                Handler handler = new Handler();
+                Runnable updateSeekBar = new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                            seekBar.setProgress(mediaPlayer.getCurrentPosition()); // Update progress
+                            handler.postDelayed(this, 1000); // Update every second
+                        }
+                    }
+                };
+                handler.post(updateSeekBar); // Start the Runnable when MediaPlayer is ready
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        if (fromUser && mediaPlayer != null) {
+                            mediaPlayer.seekTo(progress); // Seek to the desired position
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        handler.removeCallbacks(updateSeekBar); // Pause updates while dragging
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        handler.post(updateSeekBar); // Resume updates after dragging
+                    }
+                });
+                // Play Button: Resume Playback and Start SeekBar Updates
+                playButton.setOnClickListener(v -> {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.start(); // Start/resume playback
+                        handler.post(updateSeekBar); // Resume updating the SeekBar
+                    }
+                });
+
+                pauseButton.setOnClickListener(v -> {
+                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                        mediaPlayer.pause(); // Pause playback
+                        handler.removeCallbacks(updateSeekBar); // Stop updating the SeekBar
+                    }
+                });
+                stopButton.setOnClickListener(v -> {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.stop();
+                        mediaPlayer.reset(); // Reset the MediaPlayer
+                        try {
+                            mediaPlayer.setDataSource(selectedPath); // Set the song's file path again
+                            mediaPlayer.prepare(); // Prepare it for playback
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            });
+            mediaPlayer.setOnCompletionListener(mp -> {
+                int nextSongIndex = songIndex + 1; // Increment and get the next song index
+                if (nextSongIndex < songPaths.size()) {
+                    String nextSelectedPath = songPaths.get(nextSongIndex); // Get the file path of the clicked item
+                    String nextSongTitle = songTitles.get(nextSongIndex);
+                    String nextSongArtist = songArtists.get(nextSongIndex);
+                    playSong(nextSongIndex, nextSongTitle, nextSongArtist, nextSelectedPath); // Play the next song
+                } else {
+                    // Reset to the first song if the playlist is complete
+                    String firstSelectedPath = songPaths.get(0); // Get the file path of the clicked item
+                    String firstSongTitle = songTitles.get(0);
+                    String firstSongArtist = songArtists.get(0);
+                    playSong(0, firstSongTitle, firstSongArtist, firstSelectedPath);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Error playing song", Toast.LENGTH_SHORT).show();
         }
     }
 
