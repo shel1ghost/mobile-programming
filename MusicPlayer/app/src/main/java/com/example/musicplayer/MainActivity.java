@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Button playButton, pauseButton, stopButton;
     SeekBar seekBar;
     ListView listView;
-    TextView songPlayed, artistPlayed;
+    TextView songPlayed, artistPlayed, elapsedTime, totalDuration;
     ArrayList<String> songTitles = new ArrayList<>();
     ArrayList<String> songPaths = new ArrayList<>();
     ArrayList<String> songArtists = new ArrayList<>();
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         pauseButton = findViewById(R.id.pauseButton);
         stopButton = findViewById(R.id.stopButton);
         seekBar = findViewById(R.id.seekBar);
+        elapsedTime = findViewById(R.id.elapsed_time);
+        totalDuration = findViewById(R.id.total_duration);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
 
     }
@@ -134,23 +136,30 @@ public class MainActivity extends AppCompatActivity {
 
             mediaPlayer.setOnPreparedListener(mp -> {
                 seekBar.setMax(mp.getDuration()); // Set max value based on song duration
+                int duration = mediaPlayer.getDuration(); // Get total duration in milliseconds
+                totalDuration.setText(formatTime(duration));
 
                 Handler handler = new Handler();
                 Runnable updateSeekBar = new Runnable() {
                     @Override
                     public void run() {
                         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                            int currentPosition = mediaPlayer.getCurrentPosition(); // Get current position
+                            // Update elapsed time TextView
+                            elapsedTime.setText(formatTime(currentPosition));
                             seekBar.setProgress(mediaPlayer.getCurrentPosition()); // Update progress
                             handler.postDelayed(this, 1000); // Update every second
                         }
                     }
                 };
+                handler.removeCallbacks(updateSeekBar);
                 handler.post(updateSeekBar); // Start the Runnable when MediaPlayer is ready
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         if (fromUser && mediaPlayer != null) {
                             mediaPlayer.seekTo(progress); // Seek to the desired position
+                            elapsedTime.setText(formatTime(progress));
                         }
                     }
 
@@ -210,6 +219,12 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Error playing song", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private String formatTime(int timeInMillis) {
+        int minutes = (timeInMillis / 1000) / 60;
+        int seconds = (timeInMillis / 1000) % 60;
+        return String.format("%d:%02d", minutes, seconds);
     }
 
     @Override
