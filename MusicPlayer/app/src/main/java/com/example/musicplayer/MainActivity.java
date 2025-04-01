@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.Manifest;
@@ -33,7 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
-    Button prevButton, pauseButton, nextButton;
+    ImageButton prevButton, nextButton, pauseButton;
     SeekBar seekBar;
     ListView listView;
     TextView songPlayed, artistPlayed, elapsedTime, totalDuration;
@@ -191,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
                     if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                         mediaPlayer.pause(); // Pause playback
                         handler.removeCallbacks(updateSeekBar); // Stop updating the SeekBar
-                        pauseButton.setText("Resume");
+                        pauseButton.setImageResource(R.drawable.playsolid);
                     }else{
-                        pauseButton.setText("Pause");
+                        pauseButton.setImageResource(R.drawable.pausesolid);
                         mediaPlayer.start();
                         handler.post(updateSeekBar);
                     }

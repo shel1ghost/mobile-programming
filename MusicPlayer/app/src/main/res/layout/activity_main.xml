@@ -18,12 +18,12 @@
     <ListView
         android:id="@+id/songListView"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="410dp"
         android:background="@drawable/border"
         android:divider="@color/grey"
         android:dividerHeight="1dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginBottom="2dp"/>
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -80,32 +80,37 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        android:layout_height="wrap_content">
 
-        <Button
+        <ImageButton
             android:id="@+id/prevButton"
-            android:text="Prev"
-            android:fontFamily="serif"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:src="@drawable/backwardsolid"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/button_background"
+            android:padding="10dp"
+            android:layout_marginLeft="90dp"
             android:layout_marginRight="12dp"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/pauseButton"
-            android:text="Pause"
-            android:fontFamily="serif"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"/>
+            android:src="@drawable/pausesolid"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="12dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/button_background"
+            android:padding="10dp"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/nextButton"
-            android:text="Next"
-            android:fontFamily="serif"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"/>
+            android:background="@drawable/button_background"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/forwardsolid"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:layout_marginRight="90dp"/>
     </LinearLayout>
 </LinearLayout>
