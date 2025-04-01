@@ -2,10 +2,13 @@ package com.example.musicplayer;
 
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,21 +33,22 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
-    Button playButton, pauseButton, stopButton;
+    Button prevButton, pauseButton, nextButton;
     SeekBar seekBar;
     ListView listView;
     TextView songPlayed, artistPlayed, elapsedTime, totalDuration;
     ArrayList<String> songTitles = new ArrayList<>();
     ArrayList<String> songPaths = new ArrayList<>();
     ArrayList<String> songArtists = new ArrayList<>();
+    ArrayList<Bitmap> albumArts = new ArrayList<>();
     private static final int PERMISSION_REQUEST_CODE = 101; // You can choose any integer value
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        playButton = findViewById(R.id.playButton);
+        prevButton = findViewById(R.id.prevButton);
         pauseButton = findViewById(R.id.pauseButton);
-        stopButton = findViewById(R.id.stopButton);
+        nextButton = findViewById(R.id.nextButton);
         seekBar = findViewById(R.id.seekBar);
         elapsedTime = findViewById(R.id.elapsed_time);
         totalDuration = findViewById(R.id.total_duration);
@@ -81,12 +85,11 @@ public class MainActivity extends AppCompatActivity {
                             songTitles.add(title); // Add title to the title array
                             songPaths.add(path);   // Add path to the path array
                             songArtists.add(artist);
+
                         }
                     }
                     cursor.close();
                 }
-                /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, R.id.song_name, songTitles);
-                listView.setAdapter(adapter);*/
                 ArrayList<Song> songs = new ArrayList<>();
                 for (int i = 0; i < songTitles.size(); i++) {
                     songs.add(new Song(songTitles.get(i), songArtists.get(i))); // Add title and artist to list
@@ -101,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
                         String selectedPath = songPaths.get(position); // Get the file path of the clicked item
                         String songTitle = songTitles.get(position);
                         String songArtist = songArtists.get(position);
-                        playButton = findViewById(R.id.playButton);
+                        prevButton = findViewById(R.id.prevButton);
                         pauseButton = findViewById(R.id.pauseButton);
-                        stopButton = findViewById(R.id.stopButton);
+                        nextButton = findViewById(R.id.nextButton);
                         songPlayed = findViewById(R.id.song_played);
                         artistPlayed = findViewById(R.id.artist_played);
                         int currentSongIndex = position;
@@ -174,10 +177,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 // Play Button: Resume Playback and Start SeekBar Updates
-                playButton.setOnClickListener(v -> {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.start(); // Start/resume playback
-                        handler.post(updateSeekBar); // Resume updating the SeekBar
+                prevButton.setOnClickListener(v -> {
+                    int prevSongIndex = songIndex - 1; // Increment and get the next song index
+                    if (prevSongIndex < songPaths.size() && prevSongIndex >= 0) {
+                        String nextSelectedPath = songPaths.get(prevSongIndex); // Get the file path of the clicked item
+                        String nextSongTitle = songTitles.get(prevSongIndex);
+                        String nextSongArtist = songArtists.get(prevSongIndex);
+                        playSong(prevSongIndex, nextSongTitle, nextSongArtist, nextSelectedPath); // Play the next song
                     }
                 });
 
@@ -185,9 +191,14 @@ public class MainActivity extends AppCompatActivity {
                     if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                         mediaPlayer.pause(); // Pause playback
                         handler.removeCallbacks(updateSeekBar); // Stop updating the SeekBar
+                        pauseButton.setText("Resume");
+                    }else{
+                        pauseButton.setText("Pause");
+                        mediaPlayer.start();
+                        handler.post(updateSeekBar);
                     }
                 });
-                stopButton.setOnClickListener(v -> {
+                /*stopButton.setOnClickListener(v -> {
                     if (mediaPlayer != null) {
                         mediaPlayer.stop();
                         mediaPlayer.reset(); // Reset the MediaPlayer
@@ -197,6 +208,21 @@ public class MainActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                    }
+                });*/
+                nextButton.setOnClickListener(v ->{
+                    int nextSongIndex = songIndex + 1; // Increment and get the next song index
+                    if (nextSongIndex < songPaths.size()) {
+                        String nextSelectedPath = songPaths.get(nextSongIndex); // Get the file path of the clicked item
+                        String nextSongTitle = songTitles.get(nextSongIndex);
+                        String nextSongArtist = songArtists.get(nextSongIndex);
+                        playSong(nextSongIndex, nextSongTitle, nextSongArtist, nextSelectedPath); // Play the next song
+                    } else {
+                        // Reset to the first song if the playlist is complete
+                        String firstSelectedPath = songPaths.get(0); // Get the file path of the clicked item
+                        String firstSongTitle = songTitles.get(0);
+                        String firstSongArtist = songArtists.get(0);
+                        playSong(0, firstSongTitle, firstSongArtist, firstSelectedPath);
                     }
                 });
             });

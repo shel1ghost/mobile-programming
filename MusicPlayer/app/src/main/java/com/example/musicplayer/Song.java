@@ -1,5 +1,7 @@
 package com.example.musicplayer;
 
+import android.graphics.Bitmap;
+
 public class Song {
     private String title;
     private String artist;
@@ -16,4 +18,5 @@ public class Song {
     public String getArtist() {
         return artist;
     }
+
 }

@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Music Player"
+        android:text="AudioVerse"
         android:textColor="@color/blue"
         android:fontFamily="serif"
         android:gravity="center"
@@ -84,28 +84,28 @@
         android:layout_marginTop="2dp">
 
         <Button
-            android:id="@+id/playButton"
-            android:text="Play"
+            android:id="@+id/prevButton"
+            android:text="Prev"
             android:fontFamily="serif"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="12dp"/>
 
         <Button
             android:id="@+id/pauseButton"
             android:text="Pause"
             android:fontFamily="serif"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="12dp"/>
 
         <Button
-            android:id="@+id/stopButton"
-            android:text="Stop"
+            android:id="@+id/nextButton"
+            android:text="Next"
             android:fontFamily="serif"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
 </LinearLayout>
