@@ -80,7 +80,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
 
         <ImageButton
             android:id="@+id/prevButton"
@@ -95,13 +96,13 @@
 
         <ImageButton
             android:id="@+id/pauseButton"
-            android:src="@drawable/pausesolid"
+            android:src="@drawable/circleplaysolid"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginRight="12dp"
             android:scaleType="fitXY"
             android:background="@drawable/button_background"
-            android:padding="10dp"/>
+            android:padding="10dp" />
 
         <ImageButton
             android:id="@+id/nextButton"

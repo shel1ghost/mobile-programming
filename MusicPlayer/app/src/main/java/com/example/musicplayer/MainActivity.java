@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
-
+        pauseButton.setImageResource(R.drawable.circlepausesolid);
         // Step 3: Play the selected song
         mediaPlayer = new MediaPlayer();
         try {
@@ -192,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
                     if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                         mediaPlayer.pause(); // Pause playback
                         handler.removeCallbacks(updateSeekBar); // Stop updating the SeekBar
-                        pauseButton.setImageResource(R.drawable.playsolid);
+                        pauseButton.setImageResource(R.drawable.circleplaysolid);
                     }else{
-                        pauseButton.setImageResource(R.drawable.pausesolid);
+                        pauseButton.setImageResource(R.drawable.circlepausesolid);
                         mediaPlayer.start();
                         handler.post(updateSeekBar);
                     }
