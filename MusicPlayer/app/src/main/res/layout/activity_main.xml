@@ -23,7 +23,7 @@
         android:divider="@color/grey"
         android:dividerHeight="1dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="2dp"/>
+        android:layout_marginBottom="4dp"/>
 
     <SeekBar
         android:id="@+id/seekBar"
