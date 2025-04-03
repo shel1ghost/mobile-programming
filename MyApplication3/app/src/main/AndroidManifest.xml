@@ -13,6 +13,21 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".HealthyVegetableDetails"
+            android:exported="false" />
+        <activity
+            android:name=".HealthyVegetables"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CustomGrid"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity9"
             android:exported="false" />
         <activity
@@ -25,7 +40,7 @@
             android:name=".MainActivity6"
             android:exported="false" />
         <activity
-            android:name=".CustomGrid"
+            android:name=".RecyclerExample"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

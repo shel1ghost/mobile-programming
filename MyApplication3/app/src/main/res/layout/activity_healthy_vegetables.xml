@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Some healthy vegetables"
+        android:layout_marginStart="38dp"
+        android:textFontWeight="700"
+        android:fontFamily="serif"
+        android:textSize="24sp"/>
+    <GridView
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:id="@+id/mygrid"
+        android:numColumns="2"
+        android:layout_height="600dp"
+        android:horizontalSpacing="4dp"
+        android:verticalSpacing="4dp"/>
+</RelativeLayout>
