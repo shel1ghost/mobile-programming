@@ -30,6 +30,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> songPaths = new ArrayList<>();
     ArrayList<String> songArtists = new ArrayList<>();
     ArrayList<Bitmap> albumArts = new ArrayList<>();
+    CustomListAdapter adapter;
     private static final int PERMISSION_REQUEST_CODE = 101; // You can choose any integer value
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,17 +93,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                     cursor.close();
                 }
+                Collections.reverse(songTitles);
+                Collections.reverse(songPaths);
+                Collections.reverse(songArtists);
                 ArrayList<Song> songs = new ArrayList<>();
                 for (int i = 0; i < songTitles.size(); i++) {
                     songs.add(new Song(songTitles.get(i), songArtists.get(i))); // Add title and artist to list
                 }
 
-                CustomListAdapter adapter = new CustomListAdapter(this, songs);
+                adapter = new CustomListAdapter(this, songs);
                 listView.setAdapter(adapter); // Set the custom adapter
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        // Update the selected position in the adapter
+                        adapter.setSelectedPosition(position);
                         String selectedPath = songPaths.get(position); // Get the file path of the clicked item
                         String songTitle = songTitles.get(position);
                         String songArtist = songArtists.get(position);
@@ -122,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void playSong(int songIndex, String songTitle, String songArtist, String selectedPath) {
+        adapter.setSelectedPosition(songIndex);
         // Stop any currently playing music
         if (mediaPlayer != null) {
             mediaPlayer.stop();

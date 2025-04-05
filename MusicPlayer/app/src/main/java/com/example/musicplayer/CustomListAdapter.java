@@ -1,6 +1,7 @@
 package com.example.musicplayer;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class CustomListAdapter extends ArrayAdapter<Song> {
-
+    private int selectedPosition = -1;
     public CustomListAdapter(Context context, ArrayList<Song> songs) {
         super(context, 0, songs);
     }
@@ -33,6 +34,18 @@ public class CustomListAdapter extends ArrayAdapter<Song> {
         songName.setText(song.getTitle());
         artistName.setText(song.getArtist());
 
+        // Change background color based on the selected position
+        if (position == selectedPosition) {
+            convertView.setBackgroundColor(Color.parseColor("#3da2f5")); // Highlight color
+        } else {
+            convertView.setBackgroundColor(Color.TRANSPARENT); // Default color
+        }
+
         return convertView;
+    }
+    // Method to update the selected position
+    public void setSelectedPosition(int position) {
+        selectedPosition = position;
+        notifyDataSetChanged(); // Refresh the ListView
     }
 }
