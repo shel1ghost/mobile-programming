@@ -1,10 +1,13 @@
 package com.example.musicplayer;
 
+import android.content.ContentUris;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -31,6 +34,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 listView = findViewById(R.id.songListView);
-                String[] projection = {MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DATA};
+                String[] projection = {MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.ALBUM_ID};
                 Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                         null,
                         null,
@@ -79,15 +83,25 @@ public class MainActivity extends AppCompatActivity {
                         int titleIndex = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
                         int pathIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
                         int artistIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                        int albumIdIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
 
                         if (titleIndex != -1 && pathIndex != -1) {
                             String title = cursor.getString(titleIndex);
                             String path = cursor.getString(pathIndex);
                             String artist = cursor.getString(artistIndex);
+                            long albumId = cursor.getLong(albumIdIndex);
 
                             songTitles.add(title); // Add title to the title array
                             songPaths.add(path);   // Add path to the path array
                             songArtists.add(artist);
+
+                                    // Fetch the album art URI
+                            Uri albumArtUri = ContentUris.withAppendedId(
+                                    MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, albumId);
+
+                                    // Get the album art bitmap
+                            Bitmap albumArt = getAlbumArt(albumArtUri);
+                            albumArts.add(albumArt);
 
                         }
                     }
@@ -96,13 +110,14 @@ public class MainActivity extends AppCompatActivity {
                 Collections.reverse(songTitles);
                 Collections.reverse(songPaths);
                 Collections.reverse(songArtists);
+                Collections.reverse(albumArts);
                 ArrayList<Song> songs = new ArrayList<>();
                 for (int i = 0; i < songTitles.size(); i++) {
-                    songs.add(new Song(songTitles.get(i), songArtists.get(i))); // Add title and artist to list
+                    songs.add(new Song(songTitles.get(i), songArtists.get(i), albumArts.get(i))); // Add title and artist to list
                 }
 
                 adapter = new CustomListAdapter(this, songs);
-                listView.setAdapter(adapter); // Set the custom adapter
+                listView.setAdapter(adapter);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -207,18 +222,6 @@ public class MainActivity extends AppCompatActivity {
                         handler.post(updateSeekBar);
                     }
                 });
-                /*stopButton.setOnClickListener(v -> {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.stop();
-                        mediaPlayer.reset(); // Reset the MediaPlayer
-                        try {
-                            mediaPlayer.setDataSource(selectedPath); // Set the song's file path again
-                            mediaPlayer.prepare(); // Prepare it for playback
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });*/
                 nextButton.setOnClickListener(v ->{
                     int nextSongIndex = songIndex + 1; // Increment and get the next song index
                     if (nextSongIndex < songPaths.size()) {
@@ -260,6 +263,25 @@ public class MainActivity extends AppCompatActivity {
         int minutes = (timeInMillis / 1000) / 60;
         int seconds = (timeInMillis / 1000) % 60;
         return String.format("%d:%02d", minutes, seconds);
+    }
+
+    public Bitmap getAlbumArt(Uri albumArtUri) {
+        Bitmap albumArt = null;
+        try {
+            // Query for the album art
+            Cursor cursor = getContentResolver().query(albumArtUri, new String[]{MediaStore.Audio.Albums.ALBUM_ART}, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                String artPath = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
+                if (artPath != null) {
+                    // Decode the album art file into a Bitmap
+                    albumArt = BitmapFactory.decodeFile(artPath);
+                }
+                cursor.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return albumArt;
     }
 
     @Override
