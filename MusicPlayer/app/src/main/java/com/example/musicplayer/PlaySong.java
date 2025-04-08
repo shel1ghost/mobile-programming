@@ -1,149 +1,41 @@
 package com.example.musicplayer;
 
-import android.content.ContentUris;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.Manifest;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import android.content.Context;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class MainActivity extends AppCompatActivity {
+public class PlaySong {
     MediaPlayer mediaPlayer;
     ImageButton prevButton, nextButton, pauseButton;
     SeekBar seekBar;
-    ListView listView;
     TextView songPlayed, artistPlayed, elapsedTime, totalDuration;
     ArrayList<String> songTitles = new ArrayList<>();
     ArrayList<String> songPaths = new ArrayList<>();
     ArrayList<String> songArtists = new ArrayList<>();
     ArrayList<Bitmap> albumArts = new ArrayList<>();
     CustomListAdapter adapter;
-    private static final int PERMISSION_REQUEST_CODE = 101; // You can choose any integer value
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        prevButton = findViewById(R.id.prevButton);
-        pauseButton = findViewById(R.id.pauseButton);
-        nextButton = findViewById(R.id.nextButton);
-        seekBar = findViewById(R.id.seekBar);
-        elapsedTime = findViewById(R.id.elapsed_time);
-        totalDuration = findViewById(R.id.total_duration);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-
+    Context context;
+    public PlaySong(Context context, CustomListAdapter adapter, ArrayList<String> songTitles, ArrayList<String> songPaths, ArrayList<String> songArtists){
+        this.context = context;
+        this.adapter = adapter;
+        this.songTitles = songTitles;
+        this.songArtists = songArtists;
+        this.songPaths = songPaths;
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                listView = findViewById(R.id.songListView);
-                String[] projection = {MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.ALBUM_ID};
-                Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                        null,
-                        null,
-                        null,
-                        null
-                );
-
-                if (cursor != null) {
-                    while (cursor.moveToNext()) {
-                        int titleIndex = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-                        int pathIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
-                        int artistIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-                        //int albumIdIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
-
-                        if (titleIndex != -1 && pathIndex != -1) {
-                            String title = cursor.getString(titleIndex);
-                            String path = cursor.getString(pathIndex);
-                            String artist = cursor.getString(artistIndex);
-                            //long albumId = cursor.getLong(albumIdIndex);
-
-                            songTitles.add(title); // Add title to the title array
-                            songPaths.add(path);   // Add path to the path array
-                            songArtists.add(artist);
-
-
-                            /*Uri albumArtUri = ContentUris.withAppendedId(
-                                    MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, albumId);
-
-                            Bitmap albumArt = getAlbumArt(albumArtUri);
-                            albumArts.add(albumArt);*/
-
-                        }
-                    }
-                    cursor.close();
-                }
-                Collections.reverse(songTitles);
-                Collections.reverse(songPaths);
-                Collections.reverse(songArtists);
-                Collections.reverse(albumArts);
-                ArrayList<Song> songs = new ArrayList<>();
-                for (int i = 0; i < songTitles.size(); i++) {
-                    songs.add(new Song(songTitles.get(i), songArtists.get(i))); // Add title and artist to list
-                }
-
-                adapter = new CustomListAdapter(this, songs);
-                listView.setAdapter(adapter);
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        // Update the selected position in the adapter
-                        adapter.setSelectedPosition(position);
-                        String selectedPath = songPaths.get(position); // Get the file path of the clicked item
-                        String songTitle = songTitles.get(position);
-                        String songArtist = songArtists.get(position);
-                        prevButton = findViewById(R.id.prevButton);
-                        pauseButton = findViewById(R.id.pauseButton);
-                        nextButton = findViewById(R.id.nextButton);
-                        songPlayed = findViewById(R.id.song_played);
-                        artistPlayed = findViewById(R.id.artist_played);
-                        int currentSongIndex = position;
-                        //PlaySong ps = new PlaySong(getApplicationContext(),adapter, songTitles, songPaths, songArtists);
-                        playSong(currentSongIndex, songTitle, songArtist, selectedPath);
-                    }
-                });
-            } else {
-                // Permission denied
-                System.out.println("Permission denied. Cannot access storage.");
-            }
-        }
-    }
-
-    private void playSong(int songIndex, String songTitle, String songArtist, String selectedPath) {
+    public void playSong(int songIndex, String songTitle, String songArtist, String selectedPath) {
         adapter.setSelectedPosition(songIndex);
         // Stop any currently playing music
         if (mediaPlayer != null) {
@@ -255,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
             });
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Error playing song", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -269,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap albumArt = null;
         try {
             // Query for the album art
-            Cursor cursor = getContentResolver().query(albumArtUri, new String[]{MediaStore.Audio.Albums.ALBUM_ART}, null, null, null);
+            Cursor cursor = context.getContentResolver().query(albumArtUri, new String[]{MediaStore.Audio.Albums.ALBUM_ART}, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 String artPath = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
                 if (artPath != null) {
@@ -284,13 +175,5 @@ public class MainActivity extends AppCompatActivity {
         return albumArt;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Release resources like MediaPlayer here
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
 }
+

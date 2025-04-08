@@ -1,16 +1,15 @@
 package com.example.musicplayer;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 public class Song {
     private String title;
     private String artist;
-    private Bitmap albumArt;
 
-    public Song(String title, String artist, Bitmap albumArt) {
+    public Song(String title, String artist) {
         this.title = title;
         this.artist = artist;
-        this.albumArt = albumArt;
     }
 
     public String getTitle() {
@@ -21,8 +20,5 @@ public class Song {
         return artist;
     }
 
-    public Bitmap getAlbumArt() {
-        return albumArt;
-    }
 
 }
