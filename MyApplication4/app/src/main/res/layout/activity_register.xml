@@ -24,13 +24,13 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Username: "
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
         <EditText
             android:layout_width="268dp"
             android:layout_height="wrap_content"
             android:autofillHints="Enter username..."
             android:id="@+id/txtUsername"
-            android:inputType="text"/>
+            android:inputType="text" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

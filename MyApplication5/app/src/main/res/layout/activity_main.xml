@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Id"
+        android:inputType="number"
+        android:id="@+id/edtId" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Name"
+        android:layout_below="@+id/edtId"
+        android:id="@+id/edtName" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Address"
+        android:layout_below="@+id/edtName"
+        android:id="@+id/edtAddress" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtAddress"
+        android:id="@+id/btnInsert"
+        android:text="Insert" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtAddress"
+        android:layout_toRightOf="@+id/btnInsert"
+        android:id="@+id/btnSelect"
+        android:layout_marginLeft="10dp"
+        android:text="Select" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtAddress"
+        android:layout_toRightOf="@+id/btnSelect"
+        android:id="@+id/btnUpdate"
+        android:layout_marginLeft="10dp"
+        android:text="Update" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtAddress"
+        android:layout_toRightOf="@+id/btnUpdate"
+        android:id="@+id/btnDelete"
+        android:layout_marginLeft="10dp"
+        android:text="Delete" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selected Data:"
+        android:layout_below="@+id/btnSelect"
+    android:layout_marginTop="10dp"
+    android:id="@+id/txtData"
+    android:textSize="18sp" />
+</RelativeLayout>
