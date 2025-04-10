@@ -1,11 +1,14 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +23,12 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences prefs = getSharedPreferences("RememberMe", MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+        if (isLoggedIn) {
+            Intent i = new Intent(Login.this, Dashboard.class);
+            startActivity(i);
+        }
         setContentView(R.layout.activity_login);
         db_helper=new MyDbHelper(this);
         Button btn_login = findViewById(R.id.btnLogin);
@@ -28,6 +37,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 EditText input_email = findViewById(R.id.txtEmail);
                 EditText input_password = findViewById(R.id.txtPassword);
+                CheckBox check_box = findViewById(R.id.rememberMe);
                 String name="", password="", email="";
                 Cursor cursor=db_helper.selectData(input_email.getText().toString(), input_password.getText().toString());
                 while (cursor.moveToNext()){
@@ -36,6 +46,16 @@ public class Login extends AppCompatActivity {
                     email=cursor.getString(2);
                 }
                 if(input_email.getText().toString().equals(email) && input_password.getText().toString().equals(password)){
+                    if(check_box.isChecked()){
+                        SharedPreferences sharedPreferences = getSharedPreferences("RememberMe", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("isLoggedIn", true);
+                        editor.putString("username", name);
+                        editor.putString("email", email);
+                        editor.apply();
+                        Intent dashboard = new Intent(Login.this, Dashboard.class);
+                        startActivity(dashboard);
+                    }
                     Intent dashboard = new Intent(Login.this, Dashboard.class);
                     dashboard.putExtra("name", name);
                     dashboard.putExtra("email", email);

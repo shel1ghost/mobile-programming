@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,16 +18,24 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class Dashboard extends AppCompatActivity {
-
+    SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        Intent i = getIntent();
-        String name = i.getStringExtra("name");
-        String email = i.getStringExtra("email");
         TextView name_view = findViewById(R.id.txtName);
-        name_view.setText(name);
+        prefs = getSharedPreferences("RememberMe", MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+        if(isLoggedIn){
+            String userName = prefs.getString("username", "");
+            String userEmail = prefs.getString("email", "");
+            name_view.setText(userName);
+        }else {
+            Intent i = getIntent();
+            String name = i.getStringExtra("name");
+            String email = i.getStringExtra("email");
+            name_view.setText(name);
+        }
         Toolbar toolbar = findViewById(R.id.dashboard_toolbar);
         setSupportActionBar(toolbar);
     }
@@ -52,6 +62,9 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(profile);
                 break;
             case "Logout":
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.apply();
                 Intent logout = new Intent(Dashboard.this, MainActivity.class);
                 startActivity(logout);
                 break;
