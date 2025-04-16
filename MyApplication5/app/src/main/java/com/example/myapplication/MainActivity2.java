@@ -40,7 +40,7 @@ public class MainActivity2 extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         //url for localhost
-        String url ="http://192.168.1.95:8888/getdata.php";
+        String url ="http://192.168.1.138:8888/getdata.php";
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -61,19 +61,25 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public void decodeJSON(String response){
+        Log.d("data_fetched1:", "something");
+
         try{
             ArrayList<DataModel> data=new ArrayList<>();
             JSONObject result=new JSONObject(response);
             JSONArray array=result.getJSONArray("data");
+            //Log.d("array_data", array.toString());
             for(int i=0;i<array.length();i++){
                 //fetching each row
                 JSONObject student=array.getJSONObject(i);
+                //Log.d("fetched_array", student.toString());
                 int sid=student.getInt("roll_no");
-                String name=student.getString("name");
+                String name=student.getString("sname");
+                //Log.d("student_name", name);
                 String address=student.getString("address");
                 DataModel dataModel=new DataModel(sid,name,address);
                 data.add(dataModel);
             }
+            Log.d("data",data.toString());
             layoutManager=new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
             MysqlRecycleviewAdapter recyclerAdapter=new MysqlRecycleviewAdapter(MainActivity2.this,data);
