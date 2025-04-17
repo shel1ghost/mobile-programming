@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+    android:title="New"
+    android:id="@+id/neww"/>
+    <item
+        android:title="Edit"
+        android:id="@+id/edit"/>
+    <item
+        android:title="Profile"
+        android:id="@+id/profile"/>
+    <item
+        android:title="New"
+        android:id="@+id/logout"/>
+</menu>
