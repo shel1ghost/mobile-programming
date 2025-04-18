@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".RecyclerExample"
+            android:exported="false" />
+        <activity
             android:name=".HealthyVegetableDetails"
             android:exported="false" />
         <activity
@@ -40,7 +43,7 @@
             android:name=".MainActivity6"
             android:exported="false" />
         <activity
-            android:name=".RecyclerExample"
+            android:name=".MainActivity10"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
