@@ -11,13 +11,13 @@ import android.widget.TextView;
 public class HealthyVegetablesAdapter extends ArrayAdapter<String> {
     Activity context;
     String[] title;
-    String[] description;
+    int[] price;
     int[] image;
-    public HealthyVegetablesAdapter(Activity context, String[] title, String[] description, int[] image) {
+    public HealthyVegetablesAdapter(Activity context, String[] title, int[] price, int[] image) {
         super(context, R.layout.customgrid_items,title);
         this.context=context;
         this.title=title;
-        this.description=description;
+        this.price=price;
         this.image=image;
     }
     public View getView(int position, View view, ViewGroup parent) {
@@ -25,10 +25,10 @@ public class HealthyVegetablesAdapter extends ArrayAdapter<String> {
         View rowView=inflater.inflate(R.layout.healthy_vegetables_items, null,true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.title);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.image);
-        TextView txtDescription = (TextView) rowView.findViewById(R.id.description);
+        TextView txtDescription = (TextView) rowView.findViewById(R.id.price);
         txtTitle.setText(title[position]);
         imageView.setImageResource(image[position]);
-        txtDescription.setText(description[position]);
+        txtDescription.setText("Rs."+price[position]);
         return rowView;
     };
 }

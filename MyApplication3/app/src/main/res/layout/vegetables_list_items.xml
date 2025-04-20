@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:id="@+id/description"
+        android:id="@+id/price"
         android:layout_below="@+id/title"
         android:text="This is description"
         android:layout_toRightOf="@+id/image" />

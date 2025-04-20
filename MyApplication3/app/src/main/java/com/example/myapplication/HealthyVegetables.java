@@ -26,21 +26,25 @@ public class HealthyVegetables extends AppCompatActivity {
 // creating arrays
         String[] title={
                 "Beetroot", "Drumstick",
-                "Brocolli", "Peas"};
-        String[] description={
-                "Beetroot is rich in nutrients like iron, vitamin C, maganese, etc.",
-                "Drumstick is good source of vitamins, minerals and antioxidants.",
-                "Brocolli is good source of vitamin K which is important for blood cloting and bone health",
-                "Peas are nutritious cereal rich in protiens"
-        };
+                "Brocolli", "Peas", "Cauliflower", "Mushroom", "Beetroot", "Drumstick", "Brocolli", "Peas", "Cauliflower", "Mushroom"};
         int[] image={
                 R.drawable.beetroot,
                 R.drawable.drumstick,
                 R.drawable.brocolli,
-                R.drawable.peas
+                R.drawable.peas,
+                R.drawable.cauliflower,
+                R.drawable.mushroom,
+                R.drawable.beetroot,
+                R.drawable.drumstick,
+                R.drawable.brocolli,
+                R.drawable.peas,
+                R.drawable.cauliflower,
+                R.drawable.mushroom
         };
 
-        HealthyVegetablesAdapter adapter=new HealthyVegetablesAdapter(this,title,description,image);
+        int[] prices = {60, 75, 80, 90, 120, 50, 60, 75, 80, 90, 120, 50 };
+
+        HealthyVegetablesAdapter adapter=new HealthyVegetablesAdapter(this,title,prices,image);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,10 +62,10 @@ public class HealthyVegetables extends AppCompatActivity {
                 View v = inflater.inflate(R.layout.healthy_vegetables_dialog, null);
                 builder.setView(v);
                 TextView t = v.findViewById(R.id.title);
-                TextView d = v.findViewById(R.id.description);
+                TextView d = v.findViewById(R.id.price);
                 ImageView i = v.findViewById(R.id.image);
                 t.setText(title[position]);
-                d.setText(description[position]);
+                d.setText("Rs."+prices[position]);
                 i.setImageResource(image[position]);
                 AlertDialog alert = builder.create();
                 alert.show();

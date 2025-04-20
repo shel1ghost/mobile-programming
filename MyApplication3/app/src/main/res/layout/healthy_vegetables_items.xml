@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="110dp"
         android:textSize="18sp"
-        android:id="@+id/description"
+        android:id="@+id/price"
         android:text="This is a vegetable"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/title" />

@@ -27,5 +27,5 @@
         android:textFontWeight="700"
         android:layout_gravity="center"
         android:text="description"
-        android:id="@+id/description"/>
+        android:id="@+id/price"/>
 </LinearLayout>

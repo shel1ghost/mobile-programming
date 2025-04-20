@@ -11,15 +11,15 @@ import android.widget.TextView;
 public class VegetablesListAdapter extends ArrayAdapter<String> {
     Activity context;
     String[] title;
-    String[] description;
+    int[] price;
     int[] image;
-    public VegetablesListAdapter(Activity context, String[] title, String[]
-            description, int[] image) {
+    public VegetablesListAdapter(Activity context, String[] title, int[]
+            price, int[] image) {
 //ArrayAdapter needs String so we are supplying title
         super(context, R.layout.vegetables_list_items,title);
         this.context=context;
         this.title=title;
-        this.description=description;
+        this.price=price;
         this.image=image;
     }
     public View getView(int position, View view, ViewGroup parent) {
@@ -30,10 +30,10 @@ public class VegetablesListAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById
                 (R.id.image);
         TextView txtDescription = (TextView) rowView.findViewById
-                (R.id.description);
+                (R.id.price);
         txtTitle.setText(title[position]);
         imageView.setImageResource(image[position]);
-        txtDescription.setText(description[position]);
+        txtDescription.setText("Rs."+price[position]);
         return rowView;
     };
 }
