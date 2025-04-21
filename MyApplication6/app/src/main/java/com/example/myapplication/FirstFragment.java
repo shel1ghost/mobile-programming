@@ -25,9 +25,9 @@ public class FirstFragment extends Fragment {
                 EditText email = view.findViewById(R.id.email);
                 String txt_email = email.getText().toString();
                 EditText phone = view.findViewById(R.id.phone);
-                String txt_phone = name.getText().toString();
+                String txt_phone = phone.getText().toString();
                 EditText address = view.findViewById(R.id.address);
-                String txt_address = name.getText().toString();
+                String txt_address = address.getText().toString();
                 Bundle bundle = new Bundle();
                 bundle.putString("name", txt_name);
                 bundle.putString("email", txt_email);

@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     Activity context;
     int [] image;
-    String [] name;
-    String [] address;
-    public RecyclerViewAdapter(Activity context,String[]name, String[] address, int[]image){
-        this.name=name;
-        this.address=address;
-        this.image=image;
-        this.context=context;}
+    String [] title;
+    public RecyclerViewAdapter(Activity context,String[]title, int[]image) {
+        this.context = context;
+        this.title = title;
+        this.image = image;
+    }
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater= LayoutInflater.from(context);
@@ -29,13 +28,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtname.setText(name[position]);
-        holder.txtAddress.setText(address[position]);
+        holder.txtname.setText(title[position]);
+        //holder.txtAddress.setText(address[position]);
         holder.imageView.setImageResource(image[position]);
     }
     @Override
     public int getItemCount() {
-        return name.length;
+        return title.length;
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtname, txtAddress;
@@ -44,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         {
             super(itemview);
             txtname=itemview.findViewById(R.id.name);
-            txtAddress=itemview.findViewById(R.id.address);
+            //txtAddress=itemview.findViewById(R.id.address);
             imageView=itemview.findViewById(R.id.rimage);
 
         }
