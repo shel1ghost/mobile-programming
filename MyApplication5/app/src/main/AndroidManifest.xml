@@ -16,9 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity3"
-            android:exported="true" />
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -32,12 +30,21 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA32FoHVHut6RRLwJ_HFvyQD60t_nYV8I4" />
+            android:value="YOUR_API_KEY" />
 
         <activity
+            android:name=".MainActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_current_location" />
+        <activity
+            android:name=".MainActivity3"
+            android:exported="false" />
+        <activity
             android:name=".MapsActivity"
-            android:exported="true"
-            android:label="@string/title_activity_maps">
+            android:exported="false"/>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,16 +52,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".CurrentLocation"
+            android:exported="false">
         </activity>
     </application>
 

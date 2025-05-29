@@ -15,7 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    EditText edtId,edtName,edtAddress;
+    EditText edtPhone,edtName,edtEmail, edtFeedback;
     Button btnInsert,btnSelect,btnUpdate,btnDelete;
     TextView txtData;
     MyDbHelper myDbHelper;
@@ -25,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //creating object of MyDbHelper class
         myDbHelper=new MyDbHelper(this);
-        edtId=findViewById(R.id.edtId);
+        edtPhone=findViewById(R.id.edtPhone);
         edtName=findViewById(R.id.edtName);
-        edtAddress=findViewById(R.id.edtAddress);
+        edtEmail=findViewById(R.id.edtEmail);
+        edtFeedback=findViewById(R.id.edtFeedback);
         btnInsert=findViewById(R.id.btnInsert);
         btnUpdate=findViewById(R.id.btnUpdate);
         btnSelect=findViewById(R.id.btnSelect);
@@ -36,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int id=Integer.parseInt(edtId.getText().toString());
+                String phone = edtPhone.getText().toString();
                 String name=edtName.getText().toString();
-                String address=edtAddress.getText().toString();
+                String email=edtEmail.getText().toString();
+                String feedback=edtFeedback.getText().toString();
                 //calling insert function
-                myDbHelper.insertData(id,name,address);
+                myDbHelper.insertData(name,email, phone, feedback);
                 Toast.makeText(getApplicationContext(),"Data Inserted Successfully !", Toast.LENGTH_SHORT).show();
             }
         });
@@ -48,36 +50,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
             //retrieving data
-                int id=0;
-                String name="",address="";
+                String name="",phone="", email="", feedback="";
             //calling select function
                 Cursor cursor=myDbHelper.selectData();
                 while (cursor.moveToNext()){
-                    id=cursor.getInt(0);
-                    name=cursor.getString(1);
-                    address=cursor.getString(2);
+                    name=cursor.getString(0);
+                    email=cursor.getString(1);
+                    phone=cursor.getString(2);
+                    feedback = cursor.getString(3);
                 }
                 //displaying data in TextView
-                txtData.setText("Id="+id+"\t Name="+name+"\tAddress=" +address);
+                txtData.setText("Name="+name+"\t Email="+email+"\tPhone=" +phone+"\tFeedback="+feedback);
             }
         });
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id=edtId.getText().toString();
+                String phone = edtPhone.getText().toString();
                 String name=edtName.getText().toString();
-                String address=edtAddress.getText().toString();
+                String email=edtEmail.getText().toString();
+                String feedback=edtFeedback.getText().toString();
                 //calling insert function
-                myDbHelper.updateData(id,name,address);
+                myDbHelper.updateData(name,email, phone, feedback);
                 Toast.makeText(getApplicationContext(),"Data Updated Successfully !",Toast.LENGTH_SHORT).show();
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id=edtId.getText().toString();
+                String phone = edtPhone.getText().toString();
             //calling delete function
-                myDbHelper.deleteData(id);
+                myDbHelper.deleteData(phone);
                 Toast.makeText(getApplicationContext(),"Data Deleted Successfully !",Toast.LENGTH_SHORT).show();
             }
         });
