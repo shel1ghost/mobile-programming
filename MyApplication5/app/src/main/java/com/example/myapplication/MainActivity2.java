@@ -40,7 +40,7 @@ public class MainActivity2 extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         //url for localhost
-        String url ="http://192.168.1.138:8888/getdata.php";
+        String url ="http://192.168.1.95:8888/getdata.php";
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override

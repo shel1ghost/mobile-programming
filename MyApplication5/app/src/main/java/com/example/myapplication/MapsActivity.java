@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,8 +26,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -42,12 +42,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Intent i = getIntent();
+        double lat1 = i.getDoubleExtra("lat1", 0);
+        double long1 = i.getDoubleExtra("long1", 0);
+        double lat2 = i.getDoubleExtra("lat2", 0);
+        double long2 = i.getDoubleExtra("long2", 0);
         // Add a marker in Sydney and move the camera
-        LatLng my_location = new LatLng(27.6474887564015, 85.31724355184546);
+        //LatLng my_location = new LatLng(27.6474887564015, 85.31724355184546);
+        LatLng my_location = new LatLng(lat1, long1);
         mMap.addMarker(new MarkerOptions().position(my_location).title("Marker of my house"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(my_location));
         //27.656969036091798, 85.32215173835192
-        LatLng siddhartha_bank = new LatLng(27.656969036091798, 85.32215173835192);
+        //LatLng siddhartha_bank = new LatLng(27.656969036091798, 85.32215173835192);
+        LatLng siddhartha_bank = new LatLng(lat2, long2);
         mMap.addMarker(new MarkerOptions().position(siddhartha_bank).title("Marker of Siddhartha Bank"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(siddhartha_bank));
     }
